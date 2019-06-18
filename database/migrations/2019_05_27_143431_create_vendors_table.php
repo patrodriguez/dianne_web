@@ -30,6 +30,7 @@ class CreateVendorsTable extends Migration
             $table->string('city', 25);
             $table->string('profile_picture')->default('user.png')->nullable();
             $table->timestamp('approved_at')->nullable();
+            $table->timestamp('blacklisted_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

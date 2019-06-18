@@ -10,6 +10,10 @@
             <div class="col-12 user-img">
                 <img src="/img/diannelogo.png" width="70" height ="70" alt="Dianne Logo" href="index">
             </div>
+            @if (session('message'))
+                <div class="alert alert-danger">{{ session('message') }}</div>
+            @endif
+
             <br>
             <h2>Login</h2>
             <br>

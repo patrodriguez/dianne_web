@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportVendorsTable extends Migration
+class CreateBlacklistTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateReportVendorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('report_vendors', function (Blueprint $table) {
+        Schema::create('blacklists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('soon_to_wed_id');
+            $table->unsignedBigInteger('soon_to_wed_id')->nullable();
             $table->foreign('soon_to_wed_id')->references('id')->on('soon_to_weds');
-            $table->unsignedBigInteger('vendor_id');
+            $table->unsignedBigInteger('vendor_id')->nullable();
             $table->foreign('vendor_id')->references('id')->on('vendors');
-            $table->string('subject', 50);
-            $table->string('report_type', 50);
-            $table->text('report');
-            $table->string('status', 30);
+            $table->string('reason', 100)->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ class CreateReportVendorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('report_vendors');
+        Schema::dropIfExists('blacklists');
     }
 }

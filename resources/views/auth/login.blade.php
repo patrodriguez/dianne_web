@@ -9,6 +9,10 @@
             <div class="col-12 user-img">
                 <img src="img/diannelogo.png" width = "70" height = "70" alt="Dianne Logo" href="index">
             </div>
+            @if (session('message'))
+                <div class="alert alert-danger">{{ session('message') }}</div>
+            @endif
+
                 <br>
                 <h2>Login</h2>
                 <br>
@@ -48,13 +52,13 @@
                 </div>
 
 
-                <!--<div class="col-12 forgot">
+                <div class="col-12 forgot">
                     @if (Route::has('auth.password.request'))
                         <a class="btn btn-link" href="{{ route('auth.password.request') }}">
                             {{ __('Forgot Your Password?') }}
                         </a>
                     @endif
-                </div>-->
+                </div>
             </form>
         </div>
     </div>

@@ -49,7 +49,7 @@
                                             <td>{{ $report->bride_first_name }} {{ $report->bride_last_name }} & {{ $report->groom_first_name }} {{ $report->groom_last_name }}</td>
                                             <td>{{ $report->status }}</td>
                                             <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d F Y g:i A')}}</td>
-                                            <td><a href="#" class="btn btn-custom btn-sm" data-toggle="modal" data-target="#vendor_details">Details</a></td>
+                                            <td><a href="#" class="btn btn-custom btn-sm" data-toggle="modal" data-target="#stw_details">Details</a></td>
                                             <td><a href="#" class="btn btn-primary btn-sm">Resolve</a></td>
                                         </tr>
                                     @empty
@@ -85,7 +85,7 @@
                                                 <td>{{ $report->bride_first_name }} {{ $report->bride_last_name }} & {{ $report->groom_first_name }} {{ $report->groom_last_name }}</td>
                                                 <td>{{ $report->status }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d F Y g:i A')}}</td>
-                                                <td><a href="#" class="btn btn-custom btn-sm" data-toggle="modal" data-target="#vendor_details">Details</a></td>
+                                                <td><a href="#" class="btn btn-custom btn-sm">Details</a></td>
                                             </tr>
                                         @else
                                             <tr>

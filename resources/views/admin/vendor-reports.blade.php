@@ -85,7 +85,7 @@
                                             <td>{{ $report->first_name }} {{ $report->last_name }}</td>
                                             <td>{{ $report->status }}</td>
                                             <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d F Y g:i A')}}</td>
-                                            <td><a href="#" class="btn btn-custom btn-sm" data-toggle="modal" data-target="#vendor_details">Details</a></td>
+                                            <td><a href="#" class="btn btn-custom btn-sm">Details</a></td>
                                         </tr>
                                         @else
                                             <tr>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a class="btn btn-custom" role="button" href="/view/profile/{{ $report->id }}">View Profile</a>
+                        <a class="btn btn-custom" role="button" href="/view/profile/{{ $report->vendor_id }}">View Profile</a>
                     </div>
                 </div>
             </div>

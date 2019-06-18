@@ -26,6 +26,7 @@ class CreateSoonToWedsTable extends Migration
             $table->date('dob');
             $table->date('wedding_date');
             $table->string('profile_picture')->default('user.png')->nullable();
+            $table->timestamp('blacklisted_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

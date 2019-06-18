@@ -24,7 +24,7 @@ class Vendor extends Authenticatable
      */
     protected $fillable = [
         'user_type', 'first_name', 'last_name', 'email', 'password', 'mobile', 'company_name', 'vendor_type', 'price_range',
-        'tin', 'sec_dti_number', 'mayors_permit', 'city', 'profile_picture', 'approved_at'
+        'tin', 'sec_dti_number', 'mayors_permit', 'city', 'profile_picture', 'approved_at', 'blacklisted_at'
     ];
 
     /**
