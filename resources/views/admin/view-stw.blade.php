@@ -23,6 +23,7 @@
                 </div>
                 <div class="stwbuttons">
                     <a class="btn button_1" role="button" href="/admin/dashboard">Back</a>
+                    <a class="btn btn-danger" role="button" href="#">Blacklist</a>
                 </div>
             </div>
         </div>

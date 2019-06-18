@@ -398,6 +398,39 @@ class SoonToWedController extends Controller
         return back()->withMessage('You have successfully added a guest.');
     }
 
+    public function send(Request $request, $id)
+    {
+        $guest = Guest::find($id);
+
+        $couple = User::where('id', Auth::id())->first();
+
+        $guest->status = $request->status;
+
+        $guest->update(['status' => 'Pending']);
+
+        $data = [
+            'first_name' => $guest->first_name,
+            'last_name' => $guest->last_name,
+            'email' => $guest->email,
+            'bride_first_name' => $couple->bride_first_name,
+            'bride_last_name' => $couple->bride_last_name,
+            'groom_first_name' => $couple->groom_first_name,
+            'groom_last_name' => $couple->groom_last_name,
+            'couple_email' => $couple->email,
+            'wedding_date' => $couple->wedding_date,
+            'id' => $couple->id
+        ];
+
+        Mail::send('emails.invitation', ['data' => $data], function ($message) use ($data) {
+            $message->to($data['email'], $data['first_name'] . ' ' . $data['last_name'])
+                ->from($data['couple_email'], $data['bride_first_name'] . ' ' . $data['bride_last_name']
+                    . ' & ' . $data['groom_first_name'] . ' ' . $data['groom_last_name'])
+                ->subject('You are cordially invited to...');
+        });
+
+        return back()->with(['guest' => $guest])->with(['couple' => $couple]);
+    }
+
     public function couple_page()
     {
         $pages = DB::table('couple_pages')
@@ -544,28 +577,5 @@ class SoonToWedController extends Controller
     public function paypal()
     {
         return view('auth.paypal');
-    }
-
-    public function send(Request $request, $id)
-    {
-        $guest = Guest::find($id);
-
-        /*$couple = DB::table('guests')
-            ->select('soon_to_weds.*')
-            ->where('guests.soon_to_wed_id', Auth::id())
-            ->join('soon_to_weds', 'soon_to_weds.id', '=', 'guests.soon_to_wed_id')
-            ->get();*/
-
-        $guest->notify(new WeddingInvite($guest));
-
-        $guest->status = $request->status;
-
-        $guest->update(['status' => 'Pending']);
-
-        /*Mail::to('krunal@appdividend.com')
-            ->from()
-            ->send(new WeddingRSVP($name));*/
-
-        return back()->with(['guest' => $guest]);
     }
 }

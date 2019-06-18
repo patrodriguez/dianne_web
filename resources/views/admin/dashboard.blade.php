@@ -1,5 +1,7 @@
 @extends('layouts.admindash')
 
+@section('title', 'Admin Dashboard | DIANNE')
+
 @section('content')
     <div class="row col-lg-offset-3">
         <div class="col-lg-12">

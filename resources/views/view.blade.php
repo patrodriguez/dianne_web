@@ -1,3 +1,7 @@
+@auth('guest')
+    @extends('layouts.index')
+@endauth
+
 @extends('layouts.home')
 
 @section('title', 'Vendor Profile | DIANNE')
@@ -24,7 +28,14 @@
                         </div>
 
                         <div class="vendorbuttons">
-                            <a class="btn viewportfolio" role="button" href="/admin/view/vendor/{{ $profile->id }}/portfolio">View Portfolio</a>
+                            <a class="btn viewportfolio" role="button" href="/vendor/{{ $profile->id }}/portfolio/view">View Portfolio</a>
+                            @auth('web')
+                            <form method="POST">
+                                @csrf
+                                <a href="/request/profile/{{ $profile->id }}" role="button" class="btn button_1">Request Booking</a>
+                            </form>
+                            <a class="btn paybutton" role="button" href="/pay/vendor/{{ $profile->id }}">Pay Vendor</a>
+                            @endauth
                         </div>
                     </div>
 
@@ -33,10 +44,18 @@
                             <img class="profile-pic" id="vendor-pic" src="/storage/images/{{ $profile->profile_picture }}">
                         </div>
 
+                        @auth('web')
                         <div class="vendor_buttons">
-                            <a class="btn button_1" role="button" href="/admin/dashboard">Back</a>
-                            <a class="btn btn-danger" role="button" href="#">Blacklist</a>
+                            <form method="POST" action="/save/profile/{{ $profile->id }}">
+                                @csrf
+
+                                <button type="submit" class="btn button_1">Save Vendor</button>
+                            </form>
+                            <a href="#">
+                                <button type="submit" class="button_1" value="Submit">Chat</button>
+                            </a>
                         </div>
+                            @endauth
                     </div>
                     <hr>
                     <div class="vendorratings">
@@ -158,7 +177,13 @@
                     @empty
                         <p>No reviews found for this vendor so far.</p>
                     @endforelse
+
+                        @auth('web')
+                        <a class="btn button_1" role="button" href="/profile/{{ $profile->id }}/feedback">Leave Review</a>
                     </div>
+
+                        <a class="btn reportbutton" href="/report/vendor/{{ $profile->id }}" role="button">Report Vendor</a>
+                    @endauth
                 </div>
             </div>
         </section>

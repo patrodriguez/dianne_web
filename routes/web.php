@@ -79,9 +79,11 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
 
     // View soon-to-wed profile
-    Route::get('/view/soon-to-wed/{id}', 'AdminController@view_stw')->name('admin.view-stw');
+    Route::get('/admin/view/soon-to-wed/{id}', 'AdminController@view_stw')->name('admin.view-stw');
     // View vendor profile
-    Route::get('/view/profile/{id}', 'AdminController@view_vendor')->name('admin.view-vendor');
+    Route::get('/admin/view/vendor/{id}', 'AdminController@view_vendor')->name('admin.view-vendor');
+    // View vendor portfolio
+    Route::get('/admin/view/vendor/{id}/portfolio')->name('admin.view-portfolio');
 
     // View list of vendors to be approved
     Route::get('/admin/vendors', 'AdminController@vendors')->name('admin.vendors.index');

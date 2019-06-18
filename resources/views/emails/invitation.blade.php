@@ -108,7 +108,7 @@
                         <!-- Hero Image -->
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:left;"><img src="/img/email-bg.jpg" border="0" width="650" height="135" alt="" /></td>
+                                <td class="fluid-img" style="font-size:0pt; line-height:0pt; text-align:center;"><img src="/img/email-bg.jpg" border="0" width="650" height="135" alt="" /></td>
                             </tr>
                         </table>
                         <!-- END Hero Image -->
@@ -122,20 +122,26 @@
                                             <td class="p30-15" style="padding: 60px 30px;">
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                     <tr>
-                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">Hello {{ @$guest->first_name }} {{ $guest->last_name }}. You are cordially invited to the wedding of</td>
+                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">Hello, {{ $data['first_name'] }} {{ $data['last_name'] }}! You are cordially invited to the wedding of</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="h1 pb25" style="color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:40px; line-height:46px; text-align:center; padding-bottom:25px;">Bride & Groom</td>
+                                                        <td class="h1 pb25" style="color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:40px; line-height:46px; text-align:center; padding-bottom:25px;">{{ $data['bride_first_name'] }} {{ $data['bride_last_name'] }} & {{ $data['groom_first_name'] }} {{ $data['groom_last_name'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">consectetur adipisicing elit, sed do eiusmod <span class="m-hide"><br /></span>tempor incididunt ut labore et dolore magna aliqua.</td>
+                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">on</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="h1 pb25" style="color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:20px; line-height:46px; text-align:center; padding-bottom:25px;">{{ \Carbon\Carbon::parse($data['wedding_date'])->format('d F Y') }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">Please click on the link below to respond!</td>
                                                     </tr>
                                                     <!-- Button -->
                                                     <tr>
                                                         <td align="center">
                                                             <table class="center" border="0" cellspacing="0" cellpadding="0" style="text-align:center;">
                                                                 <tr>
-                                                                    <td class="text-button" style="background:#fecc7b; color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:14px; line-height:18px; padding:12px 30px; text-align:center; border-radius:25px; text-transform:uppercase;"><a href="#" target="_blank" class="link" style="color:#000001; text-decoration:none;"><span class="link" style="color:#000001; text-decoration:none;">CLICK HERE</span></a></td>
+                                                                    <td class="text-button" style="background:#fecc7b; color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:14px; line-height:18px; padding:12px 30px; text-align:center; border-radius:25px; text-transform:uppercase;"><a href="https://localhost:8000/invitation/{{ $data['id'] }}/rsvp" target="_blank" class="link" style="color:#000001; text-decoration:none;"><span class="link" style="color:#000001; text-decoration:none;">RSVP</span></a></td>
                                                                 </tr>
                                                             </table>
                                                         </td>

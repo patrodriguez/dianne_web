@@ -13,17 +13,16 @@ class WeddingRSVP extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $bride_first_name, $bride_last_name;
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $bride_first_name, $bride_last_name)
+    public function __construct($data)
     {
-        $this->bride_first_name = $bride_first_name;
-        $this->bride_last_name = $bride_last_name;
+        $this->data = $data;
     }
 
     /**
@@ -33,7 +32,6 @@ class WeddingRSVP extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.invitation')
-            ->with(['bride_first_name' => $this->bride_first_name, 'bride_last_name' => $this->bride_last_name]);
+        return $this->view('emails.invitation');
     }
 }

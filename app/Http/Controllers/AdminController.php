@@ -74,7 +74,27 @@ class AdminController extends Controller
     {
         $profile = Vendor::find($id);
 
-        return view('admin.view-vendor')->with(['profile' => $profile]);
+        $feedbacks = DB::table('feedbacks')
+            ->select('feedbacks.*', DB::raw('avg(feedbacks.promptness) as avg_promptness'), DB::raw('avg(feedbacks.value) as avg_value'),
+                DB::raw('avg(feedbacks.overall) as avg_overall'), DB::raw('avg(feedbacks.quality) as avg_quality'),
+                DB::raw('avg(feedbacks.professionalism) as avg_professionalism'))
+            ->join('vendors', 'vendors.id', '=', 'feedbacks.vendor_id')
+            ->where('vendor_id', $id)
+            ->get();
+
+        return view('admin.view-vendor')->with(['profile' => $profile])->with(['feedbacks' => $feedbacks]);
+    }
+
+    public function view_portfolio($id)
+    {
+        $vendor = Vendor::find($id);
+
+        $portfolios = DB::table('vendor_portfolios')
+            ->select('vendor_portfolio')
+            ->where('vendor_id', $id)
+            ->get();
+
+        return view('admin.view-portfolio')->with(['vendor' => $vendor])->with(['portfolios' => $portfolios]);
     }
 
     public function stw_reports()

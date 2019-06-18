@@ -136,7 +136,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a class="btn btn-custom" role="button" href="/view/profile/{{ $report->vendor_id }}">View Profile</a>
+                        <a class="btn btn-custom" role="button" href="/admin/view/vendor/{{ $report->vendor_id }}">View Profile</a>
                     </div>
                 </div>
             </div>
