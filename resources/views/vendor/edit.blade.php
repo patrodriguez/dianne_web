@@ -47,7 +47,7 @@
 
                         <div class="buttons btn-group btn-group-justified">
                             <button type="submit" class="button_1" id="updateProfile">Save Profile</button>
-                            <a class="button_1" href="/vendor/dashboard">Cancel</a>
+                            <a class="btn button_1" href="/vendor/dashboard">Cancel</a>
                         </div>
                     </div>
                 </form>
