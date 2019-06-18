@@ -188,7 +188,7 @@ class SoonToWedController extends Controller
     {
         $vendor = Vendor::find($id);
 
-        $vendor->soon_to_wed_reports()->attach(Auth::id(), [
+        $vendor->reports()->attach(Auth::id(), [
             'subject' => $request['subject'],
             'report_type' => $request['report_type'],
             'report' => $request['report'],

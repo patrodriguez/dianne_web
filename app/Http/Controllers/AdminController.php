@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\User;
 use App\Vendor;
 use App\Notifications\VendorApproved;
 use App\Notifications\VendorRejected;
@@ -59,5 +61,43 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.bookings.index')->withMessage('Vendor has been rejected.');
+    }
+
+    public function view_stw($id)
+    {
+        $profile = User::find($id);
+
+        return view('admin.view-stw')->with(['profile' => $profile]);
+    }
+
+    public function view_vendor($id)
+    {
+        $profile = Vendor::find($id);
+
+        return view('admin.view-vendor')->with(['profile' => $profile]);
+    }
+
+    public function stw_reports()
+    {
+        $reports = DB::table('report_soon_to_weds')
+            ->select('report_soon_to_weds.*', 'soon_to_weds.bride_first_name', 'soon_to_weds.bride_last_name', 'soon_to_weds.groom_first_name',
+                'soon_to_weds.groom_last_name', 'vendors.first_name', 'vendors.last_name')
+            ->join('soon_to_weds', 'soon_to_weds.id', '=', 'report_soon_to_weds.soon_to_wed_id')
+            ->join('vendors', 'vendors.id', '=', 'report_soon_to_weds.vendor_id')
+            ->get();
+
+        return view('admin.stw-reports')->with(['reports' => $reports]);
+    }
+
+    public function vendor_reports()
+    {
+        $reports = DB::table('report_vendors')
+            ->select('report_vendors.*', 'soon_to_weds.bride_first_name', 'soon_to_weds.bride_last_name', 'soon_to_weds.groom_first_name',
+                'soon_to_weds.groom_last_name', 'vendors.first_name', 'vendors.last_name')
+            ->join('soon_to_weds', 'soon_to_weds.id', '=', 'report_vendors.soon_to_wed_id')
+            ->join('vendors', 'vendors.id', '=', 'report_vendors.vendor_id')
+            ->get();
+
+        return view('admin.vendor-reports')->with(['reports' => $reports]);
     }
 }

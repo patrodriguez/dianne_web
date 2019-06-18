@@ -80,7 +80,14 @@ class Vendor extends Authenticatable
 
     public function soon_to_wed_reports()
     {
-        return $this->belongsToMany('App\User', 'reports', 'vendor_id',
+        return $this->belongsToMany('App\User', 'report_soon_to_weds', 'vendor_id',
+            'soon_to_wed_id')->withPivot('subject', 'report_type', 'report', 'status')
+            ->withTimestamps();
+    }
+
+    public function reports()
+    {
+        return $this->belongsToMany('App\User', 'report_vendors', 'vendor_id',
             'soon_to_wed_id')->withPivot('subject', 'report_type', 'report', 'status')
             ->withTimestamps();
     }

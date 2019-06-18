@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVendorPortfolioTable extends Migration
+class CreateReportVendorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,16 @@ class CreateVendorPortfolioTable extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_portfolios', function (Blueprint $table) {
+        Schema::create('report_vendors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('soon_to_wed_id');
+            $table->foreign('soon_to_wed_id')->references('id')->on('soon_to_weds');
             $table->unsignedBigInteger('vendor_id');
             $table->foreign('vendor_id')->references('id')->on('vendors');
-            $table->text('vendor_portfolio');
+            $table->string('subject', 50);
+            $table->string('report_type', 50);
+            $table->text('report');
+            $table->string('status', 30);
             $table->timestamps();
         });
     }
@@ -29,6 +34,6 @@ class CreateVendorPortfolioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_portfolios');
+        Schema::dropIfExists('report_vendors');
     }
 }

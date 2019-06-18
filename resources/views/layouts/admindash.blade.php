@@ -41,11 +41,30 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li{{ request()->is('reports') ? ' class=active' : '' }}>
-                        <a href="#">
+                    <li>
+                        <a data-toggle="collapse" href="#user_reports">
                             <i class="nc-icon nc-bell-55"></i>
-                            <p>User Reports</p>
+                            <p>User Reports
+                                <b class="caret"></b>
+                            </p>
                         </a>
+
+                        <div class="collapse" id="user_reports">
+                            <ul class="nav">
+                                <li>
+                                    <a href="/admin/reports/soon-to-weds">
+                                        <span class="sidebar-mini-icon"><i class="nc-icon nc-tap-01"></i></span>
+                                        <span class="sidebar-normal">Soon-to-wed Reports</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/reports/vendors">
+                                        <span class="sidebar-mini-icon"><i class="nc-icon nc-tap-01"></i></span>
+                                        <span class="sidebar-normal">Vendor Reports</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li{{ request()->is('vendors') ? ' class=active' : '' }}>
                         <a href="/admin/vendors">

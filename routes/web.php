@@ -78,12 +78,22 @@ Route::middleware(['admin'])->group(function () {
     // View admin dashboard
     Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
 
+    // View soon-to-wed profile
+    Route::get('/view/soon-to-wed/{id}', 'AdminController@view_stw')->name('admin.view-stw');
+    // View vendor profile
+    Route::get('/view/profile/{id}', 'AdminController@view_vendor')->name('admin.view-vendor');
+
     // View list of vendors to be approved
     Route::get('/admin/vendors', 'AdminController@vendors')->name('admin.vendors.index');
     // Approve vendor account
     Route::get('/admin/vendors/{vendor_id}/approve', 'AdminController@approve')->name('admin.vendors.approve');
     // Reject vendor account
     Route::get('/admin/vendors/{vendor_id}/reject', 'AdminController@reject')->name('admin.vendors.reject');
+
+    // View list of soon-to-wed reports
+    Route::get('/admin/reports/soon-to-weds', 'AdminController@stw_reports')->name('admin.stw-reports');
+    // View list of vendor reports
+    Route::get('/admin/reports/vendors', 'AdminController@vendor_reports')->name('admin.vendor-reports');
 });
 
 Route::get('/vendor/register', 'Vendor\RegisterController@showRegistrationForm')->name('vendor.register');

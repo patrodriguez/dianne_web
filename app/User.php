@@ -67,7 +67,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function vendor_reports()
     {
-        return $this->belongsToMany('App\Vendor', 'reports', 'soon_to_wed_id',
+        return $this->belongsToMany('App\Vendor', 'report_soon_to_weds', 'soon_to_wed_id',
+            'vendor_id')->withPivot('subject', 'report_type', 'report', 'status')
+            ->withTimestamps();
+    }
+
+    public function reports()
+    {
+        return $this->belongsToMany('App\Vendor', 'report_vendors', 'soon_to_wed_id',
             'vendor_id')->withPivot('subject', 'report_type', 'report', 'status')
             ->withTimestamps();
     }
