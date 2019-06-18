@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="card-body">
+                    <h5>{{ $profile->company_name }}</h5>
                     <p>Vendor Type: {{ $profile->vendor_type }}</p>
                     <p>{{ $profile->city }}</p>
                     <p>Price Range: {{ $profile->price_range }}</p>
