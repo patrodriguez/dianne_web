@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\BookingAccepted;
+use App\Notifications\NewUserReport;
 use DB;
 use PDF;
 use App\MyClients;
@@ -163,14 +164,14 @@ class VendorController extends Controller
 
     public function edit_client($id)
     {
-        $client = User::find($id);
+        $client = MyClients::find($id);
 
         return view('vendor.edit-client')->with(['client' => $client]);
     }
 
     public function update_client(Request $request, $id)
     {
-        $client = User::find($id);
+        $client = MyClients::find($id);
 
         $client->vendor_clients()->updateExistingPivot(auth()->guard('vendor')->user()->id, [
             'notes' => $request->notes,
@@ -190,16 +191,18 @@ class VendorController extends Controller
 
     public function submit_report(Request $request, $id)
     {
-        $id = User::find($id);
+        $profile = User::find($id);
 
-        $id->vendor_reports()->attach(auth()->guard('vendor')->user()->id, [
+        $profile->vendor_reports()->attach(auth()->guard('vendor')->user()->id, [
             'subject' => $request['subject'],
             'report_type' => $request['report_type'],
             'report' => $request['report'],
-            'status' => 'Unresolved'
+            'status' => 'New'
         ]);
 
-        return redirect('vendor.report')->withMessage('You have successfully submitted a report.');
+        $profile->notify(new NewUserReport());
+
+        return back()->withMessage('You have successfully reported this user. We will look into your report as soon as possible.');
     }
 
     public function view_profile($id)

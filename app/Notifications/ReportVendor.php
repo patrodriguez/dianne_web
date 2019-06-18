@@ -41,8 +41,10 @@ class ReportVendor extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject('You have been reported for rule violation...')
             ->line('A user has reported you for violation of rules.')
-            ->action('View Deets', route('vendor.dashboard'));
+            ->action('View Details', route('vendor.dashboard'))
+            ->from('admin@dianne.com', 'DIANNE Admin');
     }
 
     /**

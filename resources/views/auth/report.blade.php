@@ -14,7 +14,7 @@
 
             <h3 style="text-align: center">Report this Account</h3>
             <hr>
-                <form method="POST" id="report" action="/report/vendor/{{ $profile->id }}/submit">
+                <form method="POST" id="report_now" action="/report/vendor/{{ $profile->id }}/submit">
                  @csrf
 
                     <div class="form-group">
@@ -27,6 +27,8 @@
                         <select class="form-control" id="report_type" name="report_type" required>
                             <option>Abusive Behavior</option>
                             <option>Copyrighted Content</option>
+                            <option>Scam</option>
+                            <option>Offensive Images and/or Content</option>
                             <option>Other</option>
                         </select>
                     </div>
@@ -41,7 +43,7 @@
                             <a href="/view/profile/{{ $profile->id }}" role="button" class="btn button_1">Back</a>
                         </div>
                         <div class="col-sm">
-                            <a href="#" class="btn button_1" role="button" data-toggle="modal" data-target="#report_user">Submit Report</a>
+                            <a href="#" class="btn button_1" role="button" id="submit_report" data-toggle="modal" data-target="#report_user">Submit Report</a>
                         </div>
                     </div>
                 </form>
@@ -50,11 +52,11 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="report_user" tabindex="-1" role="dialog" aria-labelledby="report" aria-hidden="true">
+    <div class="modal fade" id="report_user" tabindex="-1" role="dialog" aria-labelledby="report_now" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="report">Submit Report</h5>
+                    <h5 class="modal-title" id="report_now">Submit Report</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,14 +64,24 @@
                 <div class="modal-body">
                     Are you sure you want to submit this report?
                     <br>
-                    <label>Subject:</label>
-                    <p id="subject1"></p>
-                    <p id="report_type1"><b>Report Type: </b></p>
-                    <p id="report1"><b>Report Details: </b></p>
+                    <table class="table-responsive">
+                        <tr>
+                            <th>Subject</th>
+                            <td id="subject1"></td>
+                        </tr>
+                        <tr>
+                            <th>Report Type:</th>
+                            <td id="report_type1"></td>
+                        </tr>
+                        <tr>
+                            <th>Report Details:</th>
+                            <td id="report1"></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="submit_report" class="btn btn-success" href="/report/vendor/{{ $profile->id }}/submit">Submit Report</button>
+                    <button type="submit" id="submit" class="btn btn-success" href="/report/vendor/{{ $profile->id }}/submit">Submit Report</button>
                 </div>
             </div>
         </div>
@@ -84,7 +96,7 @@
 
         $('#submit').click(function(){
             alert('Submit now');
-            $('#report').submit();
+            $('#report_now').submit();
         });
     </script>
 @endsection

@@ -173,10 +173,7 @@
                         <a class="btn button_1" role="button" href="/profile/{{ $profile->id }}/feedback">Leave Review</a>
                     </div>
 
-                    <form method="POST">
-                    @csrf
-                        <a class="btn reportbutton" href="/report/profile/{{ $profile->id }}" role="button">Report Vendor</a>
-                    </form>
+                        <a class="btn reportbutton" href="/report/vendor/{{ $profile->id }}" role="button">Report Vendor</a>
                 </div>
             </div>
         </section>

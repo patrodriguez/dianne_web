@@ -61,10 +61,10 @@
                             &
                             {{ $list->groom_first_name }} {{ $list->groom_last_name }}
                         </h4>
-                        <p><b>Wedding Date:</b> {{ $list->wedding_date }}</p>
+                        <p><b>Wedding Date:</b> {{ \Carbon\Carbon::parse($list->wedding_date)->format('d F Y')}}</p>
                         <br>
-                        <p><b>Booking Date:</b> {{ $list->date }}</p>
-                        <p><b>Booking Time:</b> {{ $list->time }}</p>
+                        <p><b>Booking Date:</b> {{ \Carbon\Carbon::parse($list->date)->format('d F Y')}}</p>
+                        <p><b>Booking Time:</b> {{ \Carbon\Carbon::parse($list->time)->format('g:i A')}}</p>
                         <br>
                         <p>
                             <b>Full or Installment:</b>

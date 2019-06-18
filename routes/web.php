@@ -43,6 +43,7 @@ Route::middleware(['approved'])->group(function() {
     // View soon-to-wed profile
     Route::get('view/soon-to-wed/{id}', 'VendorController@view_profile')->name('vendor.view');
 
+    // View report page
     Route::get('/report/soon-to-wed/{id}', 'VendorController@report')->name('vendor.report');
     Route::post('/report/soon-to-wed/{id}/submit', 'VendorController@submit_report')->name('vendor.report.submit');
 

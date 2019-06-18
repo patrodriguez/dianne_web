@@ -112,8 +112,8 @@ class SoonToWedController extends Controller
                 DB::raw('avg(feedbacks.overall) as avg_overall'), DB::raw('avg(feedbacks.quality) as avg_quality'),
                 DB::raw('avg(feedbacks.professionalism) as avg_professionalism'))
             ->join('vendors', 'vendors.id', '=', 'feedbacks.vendor_id')
+            ->where('vendor_id', $id)
             ->get();
-
         return view('auth.view')->with(['profile' => $profile])->with(['feedbacks' => $feedbacks]);
     }
 
@@ -192,12 +192,12 @@ class SoonToWedController extends Controller
             'subject' => $request['subject'],
             'report_type' => $request['report_type'],
             'report' => $request['report'],
-            'status' => 'Unresolved'
+            'status' => 'New'
         ]);
 
         $vendor->notify(new ReportVendor());
 
-        return redirect('auth.report')->withMessage('You have successfully submitted a report.');
+        return back()->withMessage('You have successfully reported this user. We will look into your report as soon as possible.');
     }
 
     public function view_portfolio($id)

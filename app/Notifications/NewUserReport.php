@@ -41,9 +41,10 @@ class NewUserReport extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('You have been reported for rule violation...')
+            ->line('A user has reported you for violation of rules.')
+            ->action('View Details', route('auth.dashboard'))
+            ->from('admin@dianne.com', 'DIANNE Admin');
     }
 
     /**
