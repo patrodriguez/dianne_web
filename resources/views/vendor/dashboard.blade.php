@@ -15,7 +15,6 @@
                 </div>
 
                 <div class="card-body">
-                    <h5>{{ $profile->company_name }}</h5>
                     <p>Vendor Type: {{ $profile->vendor_type }}</p>
                     <p>{{ $profile->city }}</p>
                     <p>Price Range: {{ $profile->price_range }}</p>
@@ -27,11 +26,10 @@
 
                 <!--<div class="buttons btn-group flex-wrap">
                     <a href="/vendor/dashboard/edit/{{ $profile->id }}" class="button_1">Edit Profile</a>
-                    <a href="#" class="button_1">Delete Profile</a>
+                    <a href="#" class="btn button_1">Delete Profile</a>
                 </div>-->
 
                 <div class="profile-picture">
-                    <img class="profile-pic img-responsive" id="vendorprofilepic" src="/storage/images/{{ $profile->profile_picture }}">
 
                     <div class="buttons row">
                         <a href="/vendor/dashboard/edit/{{ $profile->id }}" class="btn button_1">Edit Profile</a>
