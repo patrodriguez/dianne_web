@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Notifications\BookingAccepted;
 use DB;
+use PDF;
 use App\MyClients;
 use App\Portfolio;
 use App\User;
@@ -231,10 +232,7 @@ class VendorController extends Controller
 
         $profile->portfolios()->save($portfolio);
 
-        //$pdf = PDF::loadView('auth.create-page', $couple_page);
-        //return $pdf->download('couple-page.pdf')->withMessage('You have successfully created your couple page.');
-
-        return back()->withMessage('Creation successful.');
+        return back()->withMessage('You have successfully created your couple page.');
     }
 
     public function edit_portfolio($id)

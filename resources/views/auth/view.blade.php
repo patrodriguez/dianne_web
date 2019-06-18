@@ -24,9 +24,7 @@
                         </div>
 
                         <div class="vendorbuttons">
-                            <a href="#">
-                                <button type="submit" class="viewportfolio" value="Submit">View Portfolio</button>
-                            </a>
+                            <a class="btn viewportfolio" role="button" href="/vendor/{{ $profile->id }}/portfolio/view">View Portfolio</a>
                             <form method="POST">
                                 @csrf
                                 <a href="/request/profile/{{ $profile->id }}" role="button" class="btn button_1">Request Booking</a>

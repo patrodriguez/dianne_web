@@ -176,6 +176,9 @@ Route::group(['middleware' => ['web']], function() {
     // Save a vendor to My Vendors
     Route::post('/save/profile/{id}', 'SoonToWedController@save_vendor')->name('auth.view.save');
 
+    // View portfolio
+    Route::get('/vendor/{id}/portfolio/view', 'SoonToWedController@view_portfolio')->name('auth.view-portfolio');
+
     // Report a vendor
     Route::get('/report/vendor/{id}', 'SoonToWedController@report_vendor')->name('auth.report');
     // Submit the report as a record in the database

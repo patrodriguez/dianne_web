@@ -200,6 +200,18 @@ class SoonToWedController extends Controller
         return redirect('auth.report')->withMessage('You have successfully submitted a report.');
     }
 
+    public function view_portfolio($id)
+    {
+        $vendor = Vendor::find($id);
+
+        $portfolios = DB::table('vendor_portfolios')
+            ->select('vendor_portfolio')
+            ->where('vendor_id', $id)
+            ->get();
+
+        return view('auth.view-portfolio')->with(['vendor' => $vendor])->with(['portfolios' => $portfolios]);
+    }
+
     public function budget_tracker()
     {
         $query = DB::table('budgets');
