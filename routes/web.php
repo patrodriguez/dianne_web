@@ -37,6 +37,8 @@ Route::middleware(['approved'])->group(function() {
     Route::get('/vendor/dashboard/edit/{id}', 'VendorController@edit_profile')->name('vendor.edit');
     // Update existing record in the database
     Route::post('/vendor/dashboard/edit/{id}', 'VendorController@update_profile');
+    // Update new profile picture
+    Route::post('/vendor/dashboard', 'VendorController@update_profile_picture');
 
     // View soon-to-wed profile
     Route::get('view/soon-to-wed/{id}', 'VendorController@view_profile')->name('vendor.view');

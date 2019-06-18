@@ -25,16 +25,23 @@
                     <p>Mayor's Permit: {{ $profile->mayors_permit }}</p>
                 </div>
 
-                <!--<div class="buttons btn-group flex-wrap">
-                    <a href="/vendor/dashboard/edit/{{ $profile->id }}" class="button_1">Edit Profile</a>
-                    <a href="#" class="button_1">Delete Profile</a>
-                </div>-->
-
                 <div class="profile-picture">
                     <img class="profile-pic img-responsive" id="vendorprofilepic" src="/storage/images/{{ $profile->profile_picture }}">
 
+                    <form method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="upload-pic">
+                            <input type="file" accept="image/png, image/jpg, image/jpeg, image/gif" class="form-control-file" name="profile_picture" id="profile_picture">
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn button_1">Update Picture</button>
+                        </div>
+                    </form>
+
                     <div class="buttons row">
                         <a href="/vendor/dashboard/edit/{{ $profile->id }}" class="btn button_1">Edit Profile</a>
+                        <a href="#" class="btn button_1" role="button">Delete Profile</a>
                     </div>
                 </div>
 

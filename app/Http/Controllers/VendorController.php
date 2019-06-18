@@ -78,6 +78,28 @@ class VendorController extends Controller
         return redirect('/vendor/dashboard');
     }
 
+    public function update_profile_picture(Request $request, $id)
+    {
+        $profile = Vendor::find($id);
+
+        if ($request->hasFile('profile_picture'))
+        {
+            $request->validate([
+                'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            $image_name = $profile->id.'_profile_picture'.time().'.'.request()->profile_picture->getClientOriginalExtension();
+
+            $request->profile_picture->storeAs('images',$image_name);
+
+            $profile->profile_picture = $image_name;
+
+            $profile->update(['profile_picture' => $image_name]);
+
+            return back()->withMessage('You have successfully updated your profile picture.');
+        }
+    }
+
     public function requests()
     {
         $lists = DB::table('bookings')
