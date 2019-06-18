@@ -34,7 +34,7 @@
                     <img class="profile-pic img-responsive" id="vendorprofilepic" src="/storage/images/{{ $profile->profile_picture }}">
 
                     <div class="buttons row">
-                        <a href="/dashboard/edit/{{ $profile->id }}" class="btn button_1">Edit Profile</a>
+                        <a href="/vendor/dashboard/edit/{{ $profile->id }}" class="btn button_1">Edit Profile</a>
                     </div>
                 </div>
 

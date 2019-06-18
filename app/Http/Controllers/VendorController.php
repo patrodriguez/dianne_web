@@ -63,26 +63,17 @@ class VendorController extends Controller
 
         $profile->first_name = $request->first_name;
         $profile->last_name = $request->last_name;
-        $profile->email = $request->email;
         $profile->mobile = $request->mobile;
-        $profile->company_name = $request->company_name;
-        $profile->vendor_type = $request->vendor_type;
         $profile->city = $request->city;
         $profile->price_range = $request->price_range;
-        $profile->tin = $request->tin;
-        $profile->sec_dti_number = $request->sec_dti_number;
-        $profile->mayors_permit = $request->mayors_permit;
 
-        $request->validate([
-            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        $profile->update(['first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'mobile' => $request->mobile,
+                            'city' => $request->city,
+                            'price_range' => $request->price_range,
+
         ]);
-
-        $image_name = $profile->id.'_profile_picture'.time().'.'.request()->profile_picture->getClientOriginalExtension();
-
-        $request->profile_picture->storeAs('images',$image_name);
-
-        $profile->profile_picture = $image_name;
-        $profile->save();
         $request->session()->flash('message', 'Your profile has been successfully saved.');
         return redirect('/vendor/dashboard');
     }
