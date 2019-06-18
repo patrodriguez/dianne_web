@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Notifications\BookingAccepted;
 use DB;
 use App\MyClients;
+use App\Portfolio;
 use App\User;
 use App\Vendor;
 use Illuminate\Support\Facades\Auth;
@@ -205,5 +206,51 @@ class VendorController extends Controller
         $profile = User::find($id);
 
         return view('vendor.view')->with(['profile' => $profile]);
+    }
+
+    public function vendor_portfolio()
+    {
+        $portfolios = DB::table('vendor_portfolios')
+            ->where('vendor_id', auth()->guard('vendor')->user()->id)
+            ->get();
+
+        return view('vendor.portfolio')->with(['portfolios' => $portfolios]);
+    }
+
+    public function create_portfolio()
+    {
+        return view('vendor.create-portfolio');
+    }
+
+    public function save_portfolio(Request $request, $id)
+    {
+        $profile = Vendor::find($id);
+
+        $portfolio = new Portfolio;
+        $portfolio->vendor_portfolio = $request->input('vendor_portfolio');
+
+        $profile->portfolios()->save($portfolio);
+
+        //$pdf = PDF::loadView('auth.create-page', $couple_page);
+        //return $pdf->download('couple-page.pdf')->withMessage('You have successfully created your couple page.');
+
+        return back()->withMessage('Creation successful.');
+    }
+
+    public function edit_portfolio($id)
+    {
+        $portfolio = Portfolio::find($id);
+
+        return view('vendor.edit-portfolio')->with(['portfolio' => $portfolio]);
+    }
+
+    public function update_portfolio(Request $request, $id)
+    {
+        $portfolio = Portfolio::find($id);
+
+        $portfolio->vendor_portfolio = $request->vendor_portfolio;
+
+        $portfolio->update(['vendor_portfolio' => $request->vendor_portfolio]);
+        return back()->withMessage('You have saved changes to your couple page successfully.');
     }
 }

@@ -39,8 +39,8 @@
                         <p>Summary</p>
                     </a>
                 </li>
-                <li>
-                    <a href="./ #">
+                <li{{ request()->is('/vendor/portfolio') ? 'class=active' : '' }}>
+                    <a href="/vendor/portfolio">
                         <i class="nc-icon nc-album-2"></i>
                         <p>Vendor Portfolio</p>
                     </a>

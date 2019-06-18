@@ -107,4 +107,9 @@ class Vendor extends Authenticatable
             'overall')
             ->withTimestamps();
     }
+
+    public function portfolios()
+    {
+        return $this->hasMany('App\Portfolio', 'vendor_id');
+    }
 }

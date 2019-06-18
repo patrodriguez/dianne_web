@@ -59,6 +59,18 @@ Route::middleware(['approved'])->group(function() {
     Route::get('/vendor/client/{id}/edit', 'VendorController@edit_client')->name('vendor.edit-client');
     // Update client notes into the database
     Route::post('/vendor/client/{id}/edit', 'VendorController@update_client');
+
+    // View vendor portfolio page
+    Route::get('/vendor/portfolio', 'VendorController@vendor_portfolio')->name('vendor.portfolio');
+    // Create vendor portfolio page
+    Route::get('/vendor/{id}/portfolio/create', 'VendorController@create_portfolio')->name('vendor.create-portfolio');
+    // Save portfolio to database
+    Route::post('/vendor/{id}/portfolio/create', 'VendorController@save_portfolio');
+    // Edit portfolio
+    Route::get('/vendor/{id}/portfolio/edit', 'VendorController@edit_portfolio')->name('vendor.edit-portfolio');
+    // Update portfolio in database
+    Route::post('/vendor/{id}/portfolio/edit', 'VendorController@update_portfolio');
+
 });
 
 Route::middleware(['admin'])->group(function () {
