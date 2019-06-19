@@ -119,26 +119,44 @@
                                             <td class="p30-15" style="padding: 60px 30px;">
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                     <tr>
-                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">Hello, {{ $data['first_name'] }} {{ $data['last_name'] }}! You are cordially invited to the wedding of</td>
+                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">Your guest by the name of {{ $email->first_name }} {{ $email->last_name }} has RSVP'ed to your wedding invite.<span class="m-hide"><br /></span>Here are their details.</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="h1 pb25" style="color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:40px; line-height:46px; text-align:center; padding-bottom:25px;">{{ $data['bride_first_name'] }} {{ $data['bride_last_name'] }} & {{ $data['groom_first_name'] }} {{ $data['groom_last_name'] }}</td>
+                                                        <td class="h4 pb20" style="color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:20px; line-height:28px; text-align:center; padding-bottom:20px;">
+                                                            Guest Details
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">on</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="h1 pb25" style="color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:20px; line-height:46px; text-align:center; padding-bottom:25px;">{{ \Carbon\Carbon::parse($data['wedding_date'])->format('d F Y') }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center pb25" style="color:#666666; font-family:'Muli', Arial,sans-serif; font-size:16px; line-height:30px; text-align:center; padding-bottom:25px;">Please click on the link below to respond!</td>
+                                                        <td class="text pb20" style="color:#999999; font-family:Arial,sans-serif; font-size:14px; line-height:26px; text-align:center; padding-bottom:20px;">
+                                                            Name: {{ $email->first_name }} {{ $email->last_name }}
+                                                            <br>
+                                                            Email: {{ $email->email }}
+                                                            <br>
+                                                            Meal Type: {{ $email->meal_type }}
+                                                            <br>
+                                                            Plus One:
+                                                            @if($email->plus_one == 'on')
+                                                                Yes
+                                                            @else
+                                                                No
+                                                            @endif
+                                                            <br>
+                                                            Allergies: {{ $email->allergies }}
+                                                            <br>
+                                                            Attending:
+                                                            @if($email->is_attending == 'on')
+                                                                Yes
+                                                            @else
+                                                                No
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                     <!-- Button -->
                                                     <tr>
                                                         <td align="center">
                                                             <table class="center" border="0" cellspacing="0" cellpadding="0" style="text-align:center;">
                                                                 <tr>
-                                                                    <td class="text-button" style="background:#fecc7b; color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:14px; line-height:18px; padding:12px 30px; text-align:center; border-radius:25px; text-transform:uppercase;"><a href="{{ route('rsvp', $data['id']) }}" target="_blank" class="link" style="color:#000001; text-decoration:none;"><span class="link" style="color:#000001; text-decoration:none;">RSVP</span></a></td>
+                                                                    <td class="text-button" style="background: #E687E1; color:#000000; font-family:'Playfair Display', Georgia,serif; font-size:14px; line-height:18px; padding:12px 30px; text-align:center; border-radius:25px; text-transform:uppercase;"><a href="{{ route('auth.guestlist') }}" target="_blank" class="link" style="color:#000001; text-decoration:none;"><span class="link" style="color:#000001; text-decoration:none;">Update Guest List</span></a></td>
                                                                 </tr>
                                                             </table>
                                                         </td>

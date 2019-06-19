@@ -55,7 +55,9 @@
                         @foreach($details as $detail)
                         <td>{{ $detail->first_name }} {{ $detail->last_name }}</td>
                         <td>{{ $detail->status }}</td>
+                        @if($detail->status == 'Invite Not Sent')
                             <td><a href="/guestlist/{{ $detail->id }}/send" class="btn btn-custom btn-sm">Send RSVP</a></td>
+                        @endif
                         <td><a href="#" class="btn btn-primary btn-sm">Details</a></td>
                         <td><a href="#" class="btn btn-primary btn-sm">Edit</a></td>
                         <td><a href="#" class="btn btn-danger btn-sm">Delete</a></td>

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\GuestRsvp;
 use DB;
 use App\User;
+use App\MealType;
 use App\Guest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class GuestController extends Controller
 {
@@ -28,27 +31,24 @@ class GuestController extends Controller
 
     public function submit_rsvp(Request $request, $id)
     {
-        /*$couple = User::find($id);
+        $couple = User::find($id);
 
-        $rsvp = new Guest();*/
-        $rsvp = Guest::find($id);
+        $stw = $couple->where('id', $id)->first();
 
-        $rsvp->first_name = $request->first_name;
-        $rsvp->last_name = $request->last_name;
-        //$rsvp->email = $request->email;
-        $rsvp->meal_type_id = $request->meal_type_id;
-        $rsvp->plus_one = $request->input('plus_one')=='on' ? 1:0;
-        $rsvp->allergy = $request->allergy;
-        $rsvp->is_attending = $request->input('is_attending')=='on' ? 1:0;
+        //$meal_type = MealType::where('soon_to_wed_id', $id)->orderBy('meal_type')->pluck('meal_type', '');
 
-        $rsvp->update(['first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'meal_type_id' => $request->meal_type_id,
-            'plus_one' => $request->input('plus_one')=='on' ? 1:0,
-            'allergy' => $request->allergy,
-            'is_attending' => $request->input('is_attending')=='on' ? 1:0
-            ]);
-        //$couple->guests()->save($rsvp);
+        $data = [
+            'bride_first_name' => $stw->bride_first_name,
+            'bride_last_name' => $stw->bride_last_name,
+            'groom_first_name' => $stw->groom_first_name,
+            'groom_last_name' => $stw->groom_last_name,
+            'email' => $stw->email,
+        ];
+
+        Mail::send(new GuestRsvp($request, $data), ['data' => $data]);
+
+        //Mail::send(new GuestRsvp($request));
+
         return back()->withMessage('You have successfully responded to this invite.');
     }
 }

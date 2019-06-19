@@ -21,7 +21,7 @@
 
                 <div class="form-group row">
                     <label for="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" maxlength="30" required>
+                    <input type="text" id="first_name" name="first_name" maxlength="30" required class="form-control">
                 </div>
 
                 <div class="form-group row">
@@ -30,10 +30,15 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="form-group row">
                     <label for="meal_type">Meal Type</label>
-                    <select class="form-control" name="meal_type_id" required>
+                    <select class="form-control" name="meal_type" required>
                         @foreach($meal as $meals)
-                            <option value="{{ $meals->id }}">{{ $meals->meal_type }}</option>
+                            <option value="{{ $meals->meal_type }}">{{ $meals->meal_type }}</option>
                         @endforeach
                     </select>
                 </div>
