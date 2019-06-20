@@ -26,7 +26,7 @@
                         @forelse ($meals as $meal)
                             <tr>
                                 <td>{{ $meal->meal_type }}</td>
-                                <td>{{ $meal->created_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($meal->created_at)->format('d F Y h:m A')}}</td>
                                 <td><a href="#" class="btn btn-danger btn-sm">Delete</a></td>
                             </tr>
                         @empty

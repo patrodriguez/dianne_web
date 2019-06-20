@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\BudgetItem;
-use App\Notifications\WeddingInvite;
 use DB;
 use PDF;
 use App\Budget;
@@ -13,7 +12,6 @@ use App\MealType;
 use App\Payments;
 use App\User;
 use App\Vendor;
-use App\Mail\WeddingRSVP;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\ReportVendor;
 use App\Notifications\NewBooking;
@@ -244,12 +242,12 @@ class SoonToWedController extends Controller
 
         $results = $query->get();
 
-        return view('auth.budget-tracker')->with(['results' => $results])->with(['lists' => $lists]);
+        return view('auth.budget-tracker.budget-tracker')->with(['results' => $results])->with(['lists' => $lists]);
     }
 
     public function add_budget()
     {
-        return view('auth.add-budget');
+        return view('auth.budget-tracker.add-budget');
     }
 
     public function save_budget(Request $request, $id) {
@@ -266,7 +264,7 @@ class SoonToWedController extends Controller
     {
         $profile = Budget::find($id);
 
-        return view('auth.edit-budget')->with(['profile' => $profile]);
+        return view('auth.budget-tracker.edit-budget')->with(['profile' => $profile]);
     }
 
     public function update_budget(Request $request, $id) {
@@ -287,7 +285,7 @@ class SoonToWedController extends Controller
             ->where('soon_to_wed_vendor.soon_to_wed_id', Auth::id())
             ->get());
 
-        return view('auth.add-item', $vendors)->with(['profile' => $profile]);
+        return view('auth.budget-tracker.add-item', $vendors)->with(['profile' => $profile]);
     }
 
     public function save_item(Request $request, $id)
@@ -309,7 +307,7 @@ class SoonToWedController extends Controller
     {
         $item = BudgetItem::find($id);
 
-        return view('auth.edit-item')->with(['item' => $item]);
+        return view('auth.budget-tracker.edit-item')->with(['item' => $item]);
     }
 
     public function update_item(Request $request, $id)
@@ -329,15 +327,37 @@ class SoonToWedController extends Controller
         return back()->withMessage('You have successfully edited this item.');
     }
 
-    public function guestlist()
+    public function export_budget()
     {
-        $details = DB::table('soon_to_weds')
-            ->select(['soon_to_weds.id', 'guests.*'])
-            ->where('soon_to_weds.id', Auth::id())
-            ->join('guests', 'guests.soon_to_wed_id', '=', 'soon_to_weds.id')
+        $data = DB::table('budget_items')
+            ->select('soon_to_weds.id', 'vendors.*', 'budget_items.*')
+            ->join('soon_to_weds', 'soon_to_weds.id', '=', 'budget_items.soon_to_wed_id')
+            ->join('vendors', 'vendors.id', '=', 'budget_items.vendor_id')
+            ->where('budget_items.soon_to_wed_id', Auth::id())
             ->get();
 
-        return view('auth.guestlist')->with(['details' => $details]);
+        $pdf = PDF::loadView('auth.budget-tracker.export', compact('data'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream(now() . '.pdf');
+    }
+
+    public function guestlist()
+    {
+        $guests = DB::table('guests')
+            ->select(DB::raw('SUM(status = "Attending") as attending'),
+                DB::raw('SUM(plus_one = "1") as additional'),
+                DB::raw('SUM(plus_one = "1") + SUM(status = "Attending") as total'),
+                DB::raw('SUM(status = "Pending") as pending'),
+                DB::raw('SUM(status = "Declined") as declined'))
+            ->where('soon_to_wed_id', Auth::id())
+            ->get();;
+
+        $details = DB::table('guests')
+            ->leftJoin('meal_types', 'meal_types.id', '=', 'guests.meal_type_id')
+            ->where('guests.soon_to_wed_id', Auth::id())
+            ->get();
+
+        return view('auth.guestlist.guestlist')->with(['details' => $details])->with(['guests' => $guests]);
     }
 
     public function meals()
@@ -348,14 +368,14 @@ class SoonToWedController extends Controller
             ->where('soon_to_weds.id', Auth::id())
             ->get();
 
-        return view('auth.meals')->with(['meals' => $meals]);
+        return view('auth.guestlist.meals')->with(['meals' => $meals]);
     }
 
     public function set_meal($id)
     {
         $profiles = User::find($id);
 
-        return view('auth.add-meal')->with(['profiles' => $profiles]);
+        return view('auth.guestlist.add-meal')->with(['profiles' => $profiles]);
     }
 
     public function add_meal(Request $request, $id)
@@ -369,19 +389,14 @@ class SoonToWedController extends Controller
         return back()->withMessage('The new response date you inputted has been saved successfully.');
     }
 
-    public function guest($id)
+    public function add_guest($id)
     {
         $profiles = User::find($id);
 
-        $meals = array('meal' => DB::table('meal_types')
-            ->join('soon_to_weds', 'soon_to_weds.id', '=', 'meal_types.soon_to_wed_id')
-            ->where('meal_types.soon_to_wed_id', $profiles)
-            ->get());
-
-        return view('auth.add-guest', $meals)->with(['profiles' => $profiles]);
+        return view('auth.guestlist.add-guest')->with(['profiles' => $profiles]);
     }
 
-    public function add_guest(Request $request, $id)
+    public function save_guest(Request $request, $id)
     {
         $profiles = User::find($id);
 
@@ -389,9 +404,6 @@ class SoonToWedController extends Controller
         $guest->first_name = $request->first_name;
         $guest->last_name = $request->last_name;
         $guest->email = $request->email;
-        $guest->meal_type_id = $request->meal_type_id;
-        $guest->allergy = $request->allergy;
-        $guest->plus_one = $request->plus_one;
         $guest->status = 'Invite Not Sent';
 
         $profiles->guests()->save($guest);
@@ -431,6 +443,50 @@ class SoonToWedController extends Controller
         return back()->with(['guest' => $guest])->with(['couple' => $couple]);
     }
 
+    public function edit_guest($id)
+    {
+        $guest = Guest::find($id);
+
+        $meals = array('meal' => DB::table('meal_types')
+            ->where('meal_types.soon_to_wed_id', Auth::id())
+            ->get());
+
+        return view('auth.guestlist.edit-guest', $meals)->with(['guest' => $guest]);
+    }
+
+    public function update_guest(Request $request, $id)
+    {
+        $guest = Guest::find($id);
+
+        $guest->first_name = $request->first_name;
+        $guest->last_name = $request->last_name;
+        $guest->meal_type_id = $request->meal_type_id;
+        $guest->allergy = $request->allergy;
+        $guest->plus_one = $request->plus_one;
+        $guest->status = $request->status;
+
+        $guest->update(['first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'meal_type_id' => $request->meal_type_id,
+            'allergy' => $request->allergy,
+            'plus_one' => $request->input('plus_one')=='on' ? 1:0,
+            'status' => $request->status]);
+
+        return back()->withMessage('You have successfully edited these details.');
+    }
+
+    public function export_guestlist()
+    {
+        $data = DB::table('guests')
+            ->leftJoin('meal_types', 'meal_types.id', '=', 'guests.meal_type_id')
+            ->where('guests.soon_to_wed_id', Auth::id())
+            ->get();
+
+        $pdf = PDF::loadView('auth.guestlist.export', compact('data'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream(now() . '.pdf');
+    }
+
     public function couple_page()
     {
         $pages = DB::table('couple_pages')
@@ -453,9 +509,6 @@ class SoonToWedController extends Controller
         $couple_page->couple_page = $request->input('couple_page');
 
         $profile->couple_pages()->save($couple_page);
-
-        //$pdf = PDF::loadView('auth.create-page', $couple_page);
-        //return $pdf->download('couple-page.pdf')->withMessage('You have successfully created your couple page.');
 
         return back()->withMessage('Creation successful.');
     }
@@ -486,7 +539,7 @@ class SoonToWedController extends Controller
             ->where('payments.soon_to_wed_id', '=', Auth::id())
             ->get();
 
-        return view('auth.payments')->with(['lists' => $lists]);
+        return view('auth.payment.payments')->with(['lists' => $lists]);
     }
 
     public function add_payment($id)
@@ -498,7 +551,7 @@ class SoonToWedController extends Controller
             ->where('soon_to_wed_vendor.soon_to_wed_id', Auth::id())
             ->get());
 
-        return view('auth.add-payment', $vendors)->with(['profiles' => $profiles]);
+        return view('auth.payment.add', $vendors)->with(['profiles' => $profiles]);
     }
 
     public function save_payment(Request $request, $id)
@@ -512,14 +565,14 @@ class SoonToWedController extends Controller
             'date_paid' => $request['date_paid']
         ]);
 
-        return view('auth.payments')->withMessage('You have successfully added a payment transaction.');
+        return view('auth.payment.payments')->withMessage('You have successfully added a payment transaction.');
     }
 
     public function edit_payment($id)
     {
         $payment = Payments::find($id);
 
-        return view('auth.edit-payment')->with(['payment' => $payment]);
+        return view('auth.payment.edit')->with(['payment' => $payment]);
     }
 
     public function update_payment(Request $request, $id)
@@ -540,7 +593,7 @@ class SoonToWedController extends Controller
                                         'status' => $request->status,
                                         'date_paid' => $request->date_paid]);
 
-        return view('auth.payments')->withMessage('You have saved changes to your couple page successfully.');
+        return view('auth.payment.payments')->withMessage('You have saved changes to your couple page successfully.');
     }
 
     public function feedback_form($id)

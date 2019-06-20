@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,26 @@ class Guest extends Model
     protected $table = 'guests';
 
     protected $fillable = [
-        'first_name', 'last_name', 'allergy', 'plus_one', 'status', 'is_attending'
+        'first_name', 'last_name', 'allergy', 'plus_one', 'status'
     ];
+
+    public function setAllergyAttribute($value)
+    {
+        if(is_null($value)) {
+            return $value;
+        }
+
+        return $this->attributes['allergy'] = Crypt::encrypt($value);
+    }
+
+    public function getAllergyAttribute($value)
+    {
+        if(is_null($value)) {
+            return $value;
+        }
+
+        return Crypt::decrypt($value);
+    }
 
     public function soon_to_weds_guest()
     {
@@ -24,7 +43,7 @@ class Guest extends Model
     {
         return $this->belongsToMany('App\User', 'guests', 'meal_type_id',
             'soon_to_wed_id')->withPivot('first_name', 'last_name', 'email', 'allergy',
-            'plus_one', 'is_attending')
+            'plus_one', 'status')
             ->withTimestamps();
     }
 }

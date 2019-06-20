@@ -108,57 +108,68 @@ Route::group(['middleware' => ['web']], function() {
     Route::get('/status', 'PaymentController@payment_status');
 
     // View payment page
-    Route::get('/payments', 'SoonToWedController@payments')->name('auth.payments');
+    Route::get('/payments', 'SoonToWedController@payments')->name('auth.payment.payments');
     // View add payment page
-    Route::get('/payments/{id}/add', 'SoonToWedController@add_payment')->name('auth.add-payment');
+    Route::get('/payments/{id}/add', 'SoonToWedController@add_payment')->name('auth.payment.add');
     // Insert payment transaction into database
     Route::post('/payments/{id}/add', 'SoonToWedController@save_payment');
 
     // Edit existing payment record
-    Route::get('/payments/{id}/edit', 'SoonToWedController@edit_payment')->name('auth.edit-payment');
+    Route::get('/payments/{id}/edit', 'SoonToWedController@edit_payment')->name('auth.payment.edit');
     // Update record in database
     Route::post('/payments/{id}/edit', 'SoonToWedController@update_payment');
 
     // View budget tracker page
-    Route::get('/budget-tracker', 'SoonToWedController@budget_tracker')->name('auth.budget-tracker');
+    Route::get('/budget-tracker', 'SoonToWedController@budget_tracker')->name('auth.budget-tracker.budget-tracker');
 
     // Add new budget
-    Route::get('/budget-tracker/{id}/budget/add', 'SoonToWedController@add_budget')->name('auth.add-budget');
+    Route::get('/budget-tracker/{id}/budget/add', 'SoonToWedController@add_budget')->name('auth.budget-tracker.add-budget');
     // Insert new budget into the database
     Route::post('/budget-tracker/{id}/budget/add', 'SoonToWedController@save_budget');
 
     // Edit existing budget
-    Route::get('/budget-tracker/{id}/budget/edit', 'SoonToWedController@edit_budget')->name('auth.edit-budget');
+    Route::get('/budget-tracker/{id}/budget/edit', 'SoonToWedController@edit_budget')->name('auth.budget-tracker.edit-budget');
     // Update budget into the database
     Route::post('/budget-tracker/{id}/budget/edit', 'SoonToWedController@update_budget');
 
     // Add new budget item
-    Route::get('/budget-tracker/{id}/item', 'SoonToWedController@add_item')->name('auth.add-item');
+    Route::get('/budget-tracker/{id}/item', 'SoonToWedController@add_item')->name('auth.budget-tracker.add-item');
     // Inserts new budget item into the database
     Route::post('/budget-tracker/{id}/item', 'SoonToWedController@save_item');
 
     // Edit existing budget item
-    Route::get('/budget-tracker/{id}/item/edit', 'SoonToWedController@edit_item')->name('auth.edit-item');
+    Route::get('/budget-tracker/{id}/item/edit', 'SoonToWedController@edit_item')->name('auth.budget-tracker.edit-item');
     // Updates budget item into the database
     Route::post('/budget-tracker/{id}/item/edit', 'SoonToWedController@update_item');
 
+    // Export budget tracker
+    Route::get('/budget-tracker/export', 'SoonToWedController@export_budget')->name('auth.budget-tracker.export');
+
     // View guest list manager page
-    Route::get('/guestlist', 'SoonToWedController@guestlist')->name('auth.guestlist');
+    Route::get('/guestlist', 'SoonToWedController@guestlist')->name('auth.guestlist.guestlist');
 
     // View add guest page
-    Route::get('/guestlist/{id}/guest', 'SoonToWedController@guest')->name('auth.add-guest');
+    Route::get('/guestlist/{id}/guest', 'SoonToWedController@add_guest')->name('auth.guestlist.add-guest');
     // Add record into the database
-    Route::post('/guestlist/{id}/guest', 'SoonToWedController@add_guest');
+    Route::post('/guestlist/{id}/guest', 'SoonToWedController@save_guest');
 
     // Send RSVP to guest
     Route::get('/guestlist/{id}/send', 'SoonToWedController@send');
 
+    // Edit guest details
+    Route::get('/guest/{id}/edit', 'SoonToWedController@edit_guest')->name('auth.guestlist.edit-guest');
+    // Update details into the database
+    Route::post('/guest/{id}/edit', 'SoonToWedController@update_guest');
+
     // View meals page
-    Route::get('/guestlist/{id}/meals', 'SoonToWedController@meals')->name('auth.meals');
+    Route::get('/guestlist/{id}/meals', 'SoonToWedController@meals')->name('auth.guestlist.meals');
     // View add meal type page
-    Route::get('/guestlist/{id}/meals/add', 'SoonToWedController@set_meal')->name('auth.add-meal');
+    Route::get('/guestlist/{id}/meals/add', 'SoonToWedController@set_meal')->name('auth.guestlist.add-meal');
     // Add meal type into database
     Route::post('/guestlist/{id}/meals/add', 'SoonToWedController@add_meal');
+
+    // Export guestlist
+    Route::get('/guestlist/export', 'SoonToWedController@export_guestlist')->name('auth.guestlist.export');
 
     // View couple page
     Route::get('/couple-page', 'SoonToWedController@couple_page')->name('auth.couple-page');

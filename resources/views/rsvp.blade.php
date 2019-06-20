@@ -19,6 +19,11 @@
             <form method="POST">
                 @csrf
 
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="is_attending">Are you attending?</label>
+                    <input class="form-check-input" style="margin-left: 10px" type="checkbox" id="is_attending" name="is_attending"/>
+                </div>
+
                 <div class="form-group row">
                     <label for="first_name">First Name</label>
                     <input type="text" id="first_name" name="first_name" maxlength="30" required class="form-control">
@@ -51,11 +56,6 @@
                 <div class="form-group row">
                     <label for="allergy">Please note down any possible allergies.</label>
                     <input type="text" id="allergy" name="allergy" class="form-control">
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="is_attending">Attending?</label>
-                    <input class="form-check-input" style="margin-left: 10px" type="checkbox" id="is_attending" name="is_attending"/>
                 </div>
 
                 <div class="row">

@@ -31,6 +31,7 @@
                     </div>
                 </div>
             <h4>List</h4>
+            <a role="button" class="btn button_1" href="/budget-tracker/export">Export to PDF</a>
             <a role="button" class="btn button_1 float-right" href="/budget-tracker/{{ Auth::id() }}/item">Add Item</a>
                 <table class="table table-striped">
                     <thead>

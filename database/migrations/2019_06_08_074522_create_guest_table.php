@@ -26,7 +26,6 @@ class CreateGuestTable extends Migration
             $table->string('allergy')->nullable();
             $table->boolean('plus_one')->default(0)->nullable();
             $table->string('status', 15)->nullable();
-            $table->boolean('is_attending')->default(1)->nullable();
             $table->timestamps();
         });
     }

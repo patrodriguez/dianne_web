@@ -35,8 +35,6 @@ class GuestController extends Controller
 
         $stw = $couple->where('id', $id)->first();
 
-        //$meal_type = MealType::where('soon_to_wed_id', $id)->orderBy('meal_type')->pluck('meal_type', '');
-
         $data = [
             'bride_first_name' => $stw->bride_first_name,
             'bride_last_name' => $stw->bride_last_name,
@@ -46,8 +44,6 @@ class GuestController extends Controller
         ];
 
         Mail::send(new GuestRsvp($request, $data), ['data' => $data]);
-
-        //Mail::send(new GuestRsvp($request));
 
         return back()->withMessage('You have successfully responded to this invite.');
     }
