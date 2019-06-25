@@ -37,7 +37,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('laravel-ckeditor') }}"></script>
     <script>
         CKEDITOR.replace( 'couple_page' );
     </script>

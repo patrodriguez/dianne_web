@@ -39,5 +39,11 @@
     <script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace( 'vendor_portfolio' );
+        CKEDITOR.config.extraPlugins = 'easyimage';
+        CKEDITOR.config.removePlugins = 'image';
+        CKEDITOR.config.extraPlugins = 'image2';
+        CKEDITOR.config.extraPlugins = 'save-to-pdf';
+
+        CKEDITOR.config.extraPlugins = 'simage';
     </script>
 @append

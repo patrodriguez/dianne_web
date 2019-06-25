@@ -39,5 +39,28 @@
     <script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
     <script>
         CKEDITOR.replace( 'couple_page' );
+        /*
+        CKEDITOR.replace( 'couple_page', {
+            extraPlugins: 'easyimage',
+            removePlugins: 'image',
+            cloudServices_tokenUrl: 'https://39507.cke-cs.com/token/dev/pplr3AceTAVBwid7PHvO7np7Piixt2D6wjkX3VCkbPemztym3RhC1zQJUZXq',
+            cloudServices_uploadUrl: 'https://39507.cke-cs.com/easyimage/upload/'
+        } );
+        */
+        //CKEDITOR.config.extraPlugins = 'justify';
+        CKEDITOR.config.extraPlugins = 'easyimage';
+        CKEDITOR.config.removePlugins = 'image';
+        CKEDITOR.config.extraPlugins = 'image2';
+        //CKEDITOR.config.extraPlugins = 'page2images';
+        //CKEDITOR.plugins.addExternal( 'save-to-pdf', 'https://rawgit.com/Api2Pdf/api2pdf.ckeditor4/master/plugins/save-to-pdf/', 'plugin.js' );
+        CKEDITOR.config.extraPlugins = 'save-to-pdf';
+
+        CKEDITOR.config.extraPlugins = 'simage';  //to enable to plugin
+
+        CKEDITOR.config.imageUploadURL = ''
+
+        //CKEDITOR.config.dataParser = func(data)
+
+
     </script>
 @append
