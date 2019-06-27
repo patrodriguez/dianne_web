@@ -23,7 +23,7 @@
 
                     <div class="row">
                         <div class="col-sm text-center">
-                            <a href="couple-page" role="button" class="btn button_1">Back</a>
+                            <a href="{{ url()->previous() }}" role="button" class="btn button_1">Back</a>
                         </div>
                         <div class="col-sm text-center">
                             <button type="submit" class="btn button_1">Create Page</button>

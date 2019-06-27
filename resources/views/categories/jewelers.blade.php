@@ -36,25 +36,28 @@
 
             <div class="row">
                 @foreach($items as $item)
-                <div class="column">
-                    <div class="card">
-                        <img src="storage/images/{{ $item->profile_picture }}" width="100" height="170" class="imgcenter img-responsive" alt="Dress">
-                        <p class="vendorname">{{ $item->first_name }} {{ $item->last_name }}</p>
-                        <p class="vendortype">{{ $item->vendor_type }}</p>
+                    @if ($user->vendor_type == 'Jewelers')
+                        <div class="column">
+                            <div class="card">
+                                <img src="storage/images/{{ $item->profile_picture }}" width="100" height="170" class="imgcenter img-responsive" alt="Dress">
+                                <p class="vendorname">{{ $item->first_name }} {{ $item->last_name }}</p>
+                                <p class="vendortype">{{ $item->vendor_type }}</p>
 
-                        <p>
-                            @if($item->price_range == 'Budget')
-                                &#8369;
-                            @elseif($item->price_range == 'Midrange')
-                                &#8369;&#8369;
-                            @elseif($item->price_range == 'Highend')
-                                &#8369;&#8369;&#8369;
-                            @endif
-                        </p>
+                                <p>
+                                    @if($item->price_range == 'Budget')
+                                        &#8369;
+                                    @elseif($item->price_range == 'Midrange')
+                                        &#8369;&#8369;
+                                    @elseif($item->price_range == 'Highend')
+                                        &#8369;&#8369;&#8369;
+                                    @endif
+                                </p>
 
-                        <p><a href="/view/profile/{{ $item->id }}" role="button" class="btn button_1">View Profile</a></p>
-                    </div><br>
-                </div>
+                                <p><a href="/view/profile/{{ $item->id }}" role="button" class="btn button_1">View Profile</a></p>
+                            </div><br>
+                        </div>
+                        @continue
+                    @endif
                 @endforeach
             </div>
         </div>

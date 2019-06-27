@@ -104,7 +104,7 @@ Route::post('/vendor/register', 'Vendor\RegisterController@register');
 Route::group(['middleware' => ['web']], function() {
     // View pay to vendor page
     Route::get('/pay/vendor/{id}', 'PaymentController@index')->name('auth.paypal');
-    Route::post('/paypal', 'PaymentController@pay');
+    Route::get('/paypal', 'PaymentController@pay');
     Route::get('/status', 'PaymentController@payment_status');
 
     // View payment page
@@ -231,3 +231,21 @@ Route::post('/invitation/{id}/rsvp', 'GuestController@submit_rsvp');
 //Route::get('/home', 'AdminController@index')->name('admin.home');
 
 Route::get('/marketplace', 'MarketplaceController@index');
+
+Route::get('/categories/bridalsalon', 'MarketplaceController@bridalsalon');
+Route::get('/categories/beautysalon', 'MarketplaceController@beautysalon');
+Route::get('/categories/jewelers', 'MarketplaceController@jewelers');
+Route::get('/categories/venue', 'MarketplaceController@venue');
+Route::get('/categories/photographers', 'MarketplaceController@photographers');
+Route::get('/categories/videographers', 'MarketplaceController@videographers');
+Route::get('/categories/officiants', 'MarketplaceController@officiants');
+Route::get('/categories/caterers', 'MarketplaceController@caterers');
+Route::get('/categories/barservice', 'MarketplaceController@barservice');
+Route::get('/categories/florist', 'MarketplaceController@florist');
+Route::get('/categories/photobooths', 'MarketplaceController@photobooths');
+Route::get('/categories/decor', 'MarketplaceController@decor');
+Route::get('/categories/transportation', 'MarketplaceController@transportation');
+Route::get('/categories/invitations', 'MarketplaceController@invitations');
+Route::get('/categories/weddingfavors', 'MarketplaceController@weddingfavors');
+Route::get('/categories/weddingplanners', 'MarketplaceController@weddingplanners');
+Route::get('/categories/others', 'MarketplaceController@others');
